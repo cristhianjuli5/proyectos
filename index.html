@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Cristhian Julián</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary: #00f2ea; /* Cyan Neon */
+            --primary-dim: rgba(0, 242, 234, 0.1);
+            --secondary: #ff0055; /* Magenta Neon */
+            --bg-dark: #050505;
+            --bg-card: rgba(17, 17, 17, 0.8); /* Transparencia para ver fondo */
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --font-tech: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Canvas de Fondo */
+        #neuro-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Detrás de todo */
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, var(--bg-dark) 80%);
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+        }
+
+        .highlight {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-dim);
+        }
+        
+        .highlight-sec {
+            color: var(--secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: var(--font-tech);
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
+            background: rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+            margin-top: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .btn-sec {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-sec:hover {
+            background: var(--secondary);
+            color: #fff;
+            box-shadow: 0 0 20px var(--secondary);
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 10px 0; /* Un poco más compacto */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-family: var(--font-tech);
+            font-weight: 700;
+            letter-spacing: 2px;
+            display: flex; /* Para alinear imagen y texto */
+            align-items: center;
+        }
+
+        /* ESTILOS DE LA FOTO INTEGRADA */
+        .logo-img {
+            width: 60px; /* Tamaño ajustado */
+            height: 60px;
+            margin-right: 15px;
+            object-fit: cover;
+            border-radius: 50%; /* Forma base circular */
+            
+            /* LA MAGIA: Difuminar los laterales */
+            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            
+            /* Filtro opcional para que combine mejor con el tema oscuro */
+            filter: brightness(1.1) contrast(1.1);
+            transition: 0.3s;
+        }
+
+        .logo:hover .logo-img {
+            filter: brightness(1.3);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 40px; /* Ajuste para móvil */
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-content h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-weight: 300;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+        }
+
+        .badge i { color: var(--primary); }
+
+        /* --- ABOUT SECTION --- */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        /* Background para tarjetas para mejorar legibilidad sobre el canvas */
+        .tech-item {
+            background: rgba(17, 17, 17, 0.8);
+            padding: 10px 20px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .tech-item:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+            background: rgba(17, 17, 17, 1);
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--text-muted);
+            text-shadow: 0 0 2px rgba(0,0,0,0.8); /* Sombra texto para leer mejor */
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* --- PROJECTS SECTION --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid #222;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: 0.4s;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 255, 0, 0.1);
+            color: #00ff00;
+            border: 1px solid #00ff00;
+        }
+
+        .status-live {
+            background: rgba(0, 242, 234, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .card-body h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .card-body p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .ptag {
+            font-size: 0.8rem;
+            color: var(--primary);
+            background: rgba(0, 242, 234, 0.05);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .card-footer {
+            padding: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            border-top: 1px solid #222;
+            text-align: right;
+        }
+
+        .link-details {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .link-details:hover {
+            color: var(--primary);
+            padding-right: 5px;
+        }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 40px 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: #111;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 242, 234, 0.1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover { color: var(--secondary); }
+
+        .modal-body h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .modal-body h4 {
+            color: #fff;
+            margin: 25px 0 15px 0;
+            border-left: 3px solid var(--secondary);
+            padding-left: 10px;
+            font-family: var(--font-tech);
+        }
+
+        .modal-body p, .modal-body li {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .modal-body ul {
+            margin-left: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: rgba(0,0,0,0.9);
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            font-size: 1.8rem;
+            color: var(--text-muted);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-icons a span {
+            font-size: 1rem;
+            font-family: var(--font-body);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content h2 { font-size: 1.2rem; display: block; }
+            .hero-content h2 span { display: none; } /* Ocultar barras separadoras en movil */
+            .about-grid { grid-template-columns: 1fr; }
+            
+            .nav-links { 
+                display: none; /* Menú hamburguesa sería ideal, pero por simplicidad ocultamos links en header móvil pequeño */
+            } 
+            
+            .logo { font-size: 1.2rem; }
+            .section { padding: 60px 0; }
+            
+            .badge {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FONDO INTERACTIVO -->
+    <canvas id="neuro-canvas"></canvas>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <!-- FOTO INTEGRADA -->
+                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQEyXWM5C5d09g/profile-displayphoto-crop_800_800/B4EZvZJALyIkAI-/0/1768874575183?e=1770249600&v=beta&t=5TVbzjExmRSjmlbXiJDcS-pdk6KmvEMgB0ewXMUUi6A" alt="Cristhian" class="logo-img">
+                    <div>CRISTHIAN<span class="highlight">.DEV</span></div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">Perfil</a></li>
+                    <li><a href="#projects">Proyectos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>DESARROLLADOR & <br><span class="highlight">ANALISTA DE SISTEMAS</span></h1>
+            <h2>
+                <span class="highlight-sec">|</span> Python • JavaScript • SQL 
+                <br style="display:none;" class="mobile-break"> 
+                • Soporte SAP POS <span class="highlight-sec">|</span>
+            </h2>
+            
+            <div class="hero-badges">
+                <div class="badge"><i class="fas fa-code"></i> Ing. Software (6° Semestre)</div>
+                <div class="badge"><i class="fas fa-server"></i> Técnico en Sistemas</div>
+                <div class="badge"><i class="fas fa-briefcase"></i> Desarrollador de Planta</div>
+            </div>
+
+            <p style="max-width: 700px; margin: 0 auto 30px auto; color: var(--text-muted); text-shadow: 0 2px 4px #000;">
+                Uniendo el desarrollo de código eficiente con la gestión operativa y el soporte especializado. Transformo necesidades complejas en soluciones tecnológicas robustas.
+            </p>
+
+            <a href="#projects" class="btn">VER PORTAFOLIO</a>
+            <a href="https://github.com/cristhianjuli5" target="_blank" class="btn btn-sec"><i class="fab fa-github"></i> GITHUB</a>
+        </div>
+    </section>
+
+    <!-- ABOUT / SKILLS -->
+    <section id="about" class="section container">
+        <h2 class="section-title">PERFIL PROFESIONAL</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    Soy un profesional híbrido con experiencia práctica tanto en <strong>Desarrollo de Software</strong> como en <strong>Infraestructura de Sistemas</strong>. Actualmente me desempeño como desarrollador de planta, donde combino mi formación en Ingeniería con la responsabilidad operativa de sistemas críticos.
+                </p>
+                <p>
+                    Mi valor agregado radica en el conocimiento integral: desde el mantenimiento del hardware y redes, pasando por el soporte experto en <strong>SAP POS</strong>, hasta la creación de aplicaciones web y automatizaciones en Python y PHP.
+                </p>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 20px;">STACK TECNOLÓGICO</h3>
+                <div class="tech-stack">
+                    <div class="tech-item"><i class="fab fa-python"></i> Python</div>
+                    <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
+                    <div class="tech-item"><i class="fab fa-php"></i> PHP / Laravel</div>
+                    <div class="tech-item"><i class="fas fa-database"></i> SQL / PostgreSQL</div>
+                    <div class="tech-item"><i class="fab fa-html5"></i> HTML5 & CSS3</div>
+                    <div class="tech-item"><i class="fab fa-git-alt"></i> Git</div>
+                    <div class="tech-item"><i class="fas fa-cash-register"></i> SAP POS Support</div>
+                    <div class="tech-item"><i class="fas fa-network-wired"></i> Redes & Hardware</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section container">
+        <h2 class="section-title">PROYECTOS & DOCUMENTACIÓN</h2>
+        <div class="projects-grid">
+            
+            <!-- PROYECTO 1: ISHAJON -->
+            <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">APP WEB EMPRESARIAL</span>
+                    <span class="status">En Producción</span>
+                </div>
+                <div class="card-body">
+                    <h3>Sistema ISHAJON</h3>
+                    <p>Plataforma integral para la gestión, aprobación y trazabilidad de permisos laborales con firma digital y flujos jerárquicos.</p>
+                    <div class="project-tags">
+                        <span class="ptag">Laravel 11</span>
+                        <span class="ptag">PostgreSQL</span>
+                        <span class="ptag">Livewire</span>
+                        <span class="ptag">Bootstrap 5</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" onclick="openModal('modal-ishajon'); return false;" class="link-details">VER DETALLES TÉCNICOS <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- PROYECTO NUEVO: CENFOTEC -->
+            <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">DESARROLLO WEB</span>
+                    <span class="status status-live">Online</span>
+                </div>
+                <div class="card-body">
+                    <h3>Sitio Web CENFOTEC</h3>
+                    <p>Portal web institucional educativo. Desarrollo enfocado en la experiencia de usuario, estructura de información y diseño responsivo.</p>
+                    <div class="project-tags">
+                        <span class="ptag">HTML5 / CSS3</span>
+                        <span class="ptag">JavaScript</span>
+                        <span class="ptag">Diseño UI/UX</span>
+                        <span class="ptag">Responsive</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.cenfotec.com.co/" target="_blank" class="link-details">VISITAR SITIO WEB <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+
+            <!-- PROYECTO 2: REQUERIMIENTOS -->
+            <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">INGENIERÍA DE SOFTWARE</span>
+                    <span class="status" style="border-color:var(--primary); color:var(--primary);">Documentación</span>
+                </div>
+                <div class="card-body">
+                    <h3>Arquitectura y SRS</h3>
+                    <p>Muestra de capacidades en análisis de requerimientos, definición de arquitectura (RBAC, Seguridad) y diseño de sistemas complejos.</p>
+                    <div class="project-tags">
+                        <span class="ptag">Análisis Funcional</span>
+                        <span class="ptag">Diseño de Seguridad</span>
+                        <span class="ptag">SRS</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" onclick="openModal('modal-reqs'); return false;" class="link-details">LEER DOCUMENTACIÓN <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- PROYECTO 3: SAP POS -->
+            <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">AUTOMATIZACIÓN & SOPORTE</span>
+                    <span class="status" style="border-color:var(--secondary); color:var(--secondary);">Operaciones</span>
+                </div>
+                <div class="card-body">
+                    <h3>Soporte SAP POS Local</h3>
+                    <p>Gestión integral del sistema de punto de venta. Capacitación de usuarios, Helpdesk Nivel 2 y scripts de mantenimiento.</p>
+                    <div class="project-tags">
+                        <span class="ptag">SAP POS</span>
+                        <span class="ptag">Helpdesk</span>
+                        <span class="ptag">Training</span>
+                        <span class="ptag">SQL Reporting</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="link-details" style="color:var(--text-muted); cursor: default;">PROYECTO INTERNO</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="container">
+            <h2 style="color: #fff; margin-bottom: 30px;">CONTACTO</h2>
+            <div class="social-icons">
+                <a href="mailto:cristhianjuli5@gmail.com"><i class="fas fa-envelope"></i> <span>cristhianjuli5@gmail.com</span></a>
+                <a href="https://www.linkedin.com/in/cristian-julián-cárdenas-parra-42695024b" target="_blank"><i class="fab fa-linkedin"></i> <span>LinkedIn</span></a>
+                <a href="https://github.com/cristhianjuli5" target="_blank"><i class="fab fa-github"></i> <span>GitHub</span></a>
+            </div>
+            <p style="margin-top: 30px; color: #444; font-size: 0.9rem;">
+                &copy; 2026 Cristhian Julián. Ingeniero en Formación.<br>
+                Diseñado con HTML5, CSS3 y JS Vanilla.
+            </p>
+        </div>
+    </footer>
+
+    <!-- MODAL 1: ISHAJON DETAILED -->
+    <div id="modal-ishajon" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-ishajon')">&times;</span>
+            <div class="modal-body">
+                <h2>SISTEMA DE GESTIÓN ISHAJON</h2>
+                <p class="highlight">Automatización de Flujos de Trabajo de RRHH</p>
+                <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+
+                <h4>1. DESCRIPCIÓN DEL SISTEMA</h4>
+                <p>Aplicación web integral diseñada para digitalizar el proceso de solicitud, aprobación y seguimiento de permisos laborales. Reemplaza procesos manuales con un flujo electrónico estructurado.</p>
+
+                <h4>2. ARQUITECTURA TÉCNICA (BACKEND & FRONTEND)</h4>
+                <ul>
+                    <li><strong>Backend:</strong> PHP 8.1 con Framework Laravel 11.x. Uso de Eloquent ORM para manejo de datos y Policies para seguridad.</li>
+                    <li><strong>Base de Datos:</strong> PostgreSQL 17.4. Estructura relacional de 8 tablas principales (Empleados, Solicitudes, Aprobaciones, etc.).</li>
+                    <li><strong>Frontend:</strong> Blade Templates con Laravel Livewire para reactividad. Bootstrap 5 para UI responsiva.</li>
+                    <li><strong>Seguridad:</strong> Autenticación robusta, Firma Digital para aprobaciones y protección CSRF/XSS.</li>
+                </ul>
+
+                <h4>3. FLUJO DE NEGOCIO IMPLEMENTADO</h4>
+                <ul>
+                    <li><strong>Etapa 1 (Solicitud):</strong> Empleado genera solicitud con tipo, fecha y justificación.</li>
+                    <li><strong>Etapa 2 (Aprobación Nivel 1):</strong> Director revisa, define compensación/descuento y firma digitalmente.</li>
+                    <li><strong>Etapa 3 (Aprobación Nivel 2):</strong> Gestión Humana valida normatividad y da el cierre final.</li>
+                    <li><strong>Notificaciones:</strong> Sistema automático de alertas por correo en cada cambio de estado.</li>
+                </ul>
+
+                <h4>4. IMPACTO</h4>
+                <p>Reducción de tiempos de respuesta administrativos, trazabilidad 100% de las solicitudes para auditoría y generación de reportes estadísticos de ausentismo.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: REQUERIMIENTOS SRS -->
+    <div id="modal-reqs" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-reqs')">&times;</span>
+            <div class="modal-body">
+                <h2>ANÁLISIS DE REQUERIMIENTOS (SRS)</h2>
+                <p class="highlight">Muestra de Estructuración Técnica y Funcional</p>
+                <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+
+                <p><em>Este documento demuestra la capacidad para traducir necesidades de negocio en especificaciones técnicas claras para el equipo de desarrollo.</em></p>
+
+                <h4>REQ 1: FUNCIONALIDAD CORE</h4>
+                <ul>
+                    <li><strong>Funcional:</strong> El sistema debe permitir al usuario [acción] de manera segura y controlada.</li>
+                    <li><strong>Técnica:</strong> Implementación de módulo que procesa datos, valida reglas de negocio y almacena en base de datos retornando respuesta en tiempo óptimo.</li>
+                </ul>
+
+                <h4>REQ 2: GESTIÓN DE USUARIOS (RBAC)</h4>
+                <ul>
+                    <li><strong>Objetivo:</strong> Controlar acceso a funcionalidades según perfil.</li>
+                    <li><strong>Solución Técnica:</strong> Sistema de autenticación con encriptación de contraseñas, control de sesiones y middleware de autorización para validar permisos por rol.</li>
+                </ul>
+
+                <h4>REQ 3: REPORTES Y DATOS</h4>
+                <ul>
+                    <li><strong>Funcional:</strong> Generación de reportes exportables (PDF/Excel) para toma de decisiones.</li>
+                    <li><strong>Técnica:</strong> Consultas optimizadas a fuente de datos, procesamiento con filtros dinámicos y renderizado gráfico en frontend.</li>
+                </ul>
+
+                <h4>REQ 4: SEGURIDAD</h4>
+                <ul>
+                    <li><strong>Implementación:</strong> Autenticación segura (JWT/OAuth2), protección contra inyecciones SQL/XSS y registro de auditoría de acciones críticas.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DEL CANVAS NEURONAL ---
+        const canvas = document.getElementById('neuro-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        
+        // Configuración
+        const config = {
+            particleCount: 80,  // Cantidad de puntos (bajar si va lento en celular)
+            connectionDistance: 150, // Distancia para conectar líneas
+            mouseDistance: 200, // Radio de interacción del mouse
+            baseColor: 'rgba(0, 242, 234, 0.5)', // Cyan
+            secColor: 'rgba(255, 0, 85, 0.5)' // Magenta
+        };
+
+        // Objeto Mouse
+        const mouse = { x: null, y: null };
+
+        // Ajustar tamaño
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            
+            // Ajustar cantidad de particulas segun ancho de pantalla
+            if(width < 768) config.particleCount = 40;
+            else config.particleCount = 80;
+            
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1.5; // Velocidad X
+                this.vy = (Math.random() - 0.5) * 1.5; // Velocidad Y
+                this.size = Math.random() * 2 + 1;
+                // Alternar colores
+                this.color = Math.random() > 0.5 ? config.baseColor : config.secColor;
+            }
+
+            update() {
+                // Mover
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Rebotar en bordes
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Interacción con Mouse
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx*dx + dy*dy);
+
+                    if (distance < config.mouseDistance) {
+                        // Atraer suavemente o repeler? Vamos a conectarlos más fuerte
+                        // Y moverlos ligeramente hacia el mouse
+                        const forceDirectionX = dx / distance;
+                        const forceDirectionY = dy / distance;
+                        const force = (config.mouseDistance - distance) / config.mouseDistance;
+                        // Efecto de atracción suave
+                        this.vx += forceDirectionX * force * 0.05;
+                        this.vy += forceDirectionY * force * 0.05;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < config.particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Dibujar líneas y particulas
+            for (let i = 0; i < particles.length; i++) {
+                let p1 = particles[i];
+                p1.update();
+                p1.draw();
+
+                // Conectar con otras partículas
+                for (let j = i; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let distance = Math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2);
+
+                    if (distance < config.connectionDistance) {
+                        ctx.beginPath();
+                        // Opacidad basada en distancia
+                        let opacity = 1 - (distance / config.connectionDistance);
+                        ctx.strokeStyle = `rgba(0, 242, 234, ${opacity * 0.4})`; // Color de línea cian
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+
+                // Conectar con el mouse
+                if (mouse.x != null) {
+                    let distMouse = Math.sqrt((p1.x - mouse.x)**2 + (p1.y - mouse.y)**2);
+                    if (distMouse < config.mouseDistance) {
+                        ctx.beginPath();
+                        let opacity = 1 - (distMouse / config.mouseDistance);
+                        ctx.strokeStyle = `rgba(255, 0, 85, ${opacity * 0.6})`; // Color magenta con mouse
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        // Inicializar
+        resize();
+        animate();
+
+
+        // --- FUNCIONES MODALES ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+                document.body.style.overflow = "auto";
+            }
+        }
+    </script>
+
+</body>
+</html>
