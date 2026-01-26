@@ -139,8 +139,9 @@
             margin-right: 15px;
             object-fit: cover;
             border-radius: 50%;
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-            mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+            /* Efecto de fusión mejorado */
+            -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
+            mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
             filter: brightness(1.1) contrast(1.1);
             transition: 0.3s;
         }
@@ -217,7 +218,7 @@
 
         /* --- ABOUT SECTION --- */
         .section {
-            padding: 100px 0;
+            padding: 80px 0;
         }
 
         .section-title {
@@ -656,6 +657,35 @@
             background: transparent; border: none; color: #fff; font-family: 'Consolas', monospace; font-size: 1rem; flex-grow: 1; outline: none; caret-color: #00ff00;
         }
 
+        /* 4. Mock API Client (Postman Style) */
+        .mock-api-client {
+            background: #1e1e1e;
+            border-radius: 8px;
+            border: 1px solid #333;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .api-header {
+            background: #252526; padding: 10px; display: flex; gap: 10px; border-bottom: 1px solid #333;
+        }
+        .api-method {
+            background: #e67e22; color: #fff; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.9rem;
+        }
+        .api-url {
+            flex-grow: 1; background: #111; border: 1px solid #333; color: #ccc; padding: 5px 10px; border-radius: 4px;
+        }
+        .api-send-btn {
+            background: var(--primary); color: #000; border: none; padding: 5px 20px; border-radius: 4px; font-weight: bold; cursor: pointer;
+        }
+        .api-body-area {
+            display: grid; grid-template-columns: 1fr 1fr; min-height: 300px;
+        }
+        .api-pane { padding: 15px; border-right: 1px solid #333; }
+        .api-pane-title { color: #888; font-size: 0.8rem; margin-bottom: 10px; text-transform: uppercase; }
+        .json-code { font-family: 'Consolas', monospace; color: #ce9178; font-size: 0.9rem; white-space: pre; }
+        .json-key { color: #9cdcfe; } .json-val { color: #ce9178; } .json-num { color: #b5cea8; }
+
         /* --- FOOTER --- */
         footer {
             background: rgba(0,0,0,0.9);
@@ -707,6 +737,8 @@
             .mock-stat-grid { grid-template-columns: 1fr; }
             .modal-tabs { flex-direction: column; }
             .tab-btn { border-bottom: 1px solid #333; }
+            .api-body-area { grid-template-columns: 1fr; }
+            .api-pane { border-right: none; border-bottom: 1px solid #333; }
         }
     </style>
 </head>
@@ -720,7 +752,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQESPdA7EP4tMA/profile-displayphoto-scale_400_400/B4EZvcNZjqHEAg-/0/1768926060807?e=1770854400&v=beta&t=DPaei1vAyJQOlhbz2Y8D9O3beb5Fq5UFjijPs42Sryw">
+                    <img src="https://media.licdn.com/dms/image/v2/D4E03AQESPdA7EP4tMA/profile-displayphoto-scale_400_400/B4EZvcNZjqHEAg-/0/1768926060807?e=1770854400&v=beta&t=DPaei1vAyJQOlhbz2Y8D9O3beb5Fq5UFjijPs42Sryw" alt="Cristhian" class="logo-img">
                     <div>CRISTHIAN<span class="highlight">.DEV</span></div>
                 </div>
                 <ul class="nav-links">
@@ -811,24 +843,24 @@
                 </div>
             </div>
 
-            <!-- PROYECTO NUEVO: CENFOTEC -->
+            <!-- PROYECTO NUEVO: API MICROSERVICIOS -->
             <div class="project-card">
                 <div class="card-header">
-                    <span style="font-weight: bold; color: #fff;">DESARROLLO WEB</span>
-                    <span class="status status-live">Online</span>
+                    <span style="font-weight: bold; color: #fff;">BACKEND DEVELOPMENT</span>
+                    <span class="status status-live">API REST</span>
                 </div>
                 <div class="card-body">
-                    <h3>Sitio Web CENFOTEC</h3>
-                    <p>Portal web institucional educativo. Desarrollo enfocado en la experiencia de usuario, estructura de información y diseño responsivo.</p>
+                    <h3>API Gateway & Servicios</h3>
+                    <p>Arquitectura de microservicios robusta utilizando FastAPI. Manejo de autenticación JWT, colas de tareas con Redis y documentación automática.</p>
                     <div class="project-tags">
-                        <span class="ptag">HTML5 / CSS3</span>
-                        <span class="ptag">JavaScript</span>
-                        <span class="ptag">Diseño UI/UX</span>
-                        <span class="ptag">Responsive</span>
+                        <span class="ptag">Python</span>
+                        <span class="ptag">FastAPI</span>
+                        <span class="ptag">Docker</span>
+                        <span class="ptag">Swagger UI</span>
                     </div>
                 </div>
                 <div class="card-footer">
-                    <a href="https://www.cenfotec.com.co/" target="_blank" class="link-details">VISITAR SITIO WEB <i class="fas fa-external-link-alt"></i></a>
+                    <a href="#" onclick="openModal('modal-api'); return false;" class="link-details">PROBAR ENDPOINTS <i class="fas fa-plug"></i></a>
                 </div>
             </div>
 
@@ -870,6 +902,48 @@
                 </div>
                 <div class="card-footer">
                     <a href="#" onclick="openModal('modal-sap'); return false;" class="link-details">VER HERRAMIENTAS <i class="fas fa-terminal"></i></a>
+                </div>
+            </div>
+
+            <!-- PROYECTO NUEVO: AUTOMATIZACION BOT -->
+            <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">SCRIPTING & BOTS</span>
+                    <span class="status" style="border-color:#e67e22; color:#e67e22;">Automatización</span>
+                </div>
+                <div class="card-body">
+                    <h3>Bot de Auditoría Automática</h3>
+                    <p>Suite de scripts en Python para la verificación de integridad de datos, rotación de logs y alertas automáticas vía Webhook.</p>
+                    <div class="project-tags">
+                        <span class="ptag">Python</span>
+                        <span class="ptag">Cron Jobs</span>
+                        <span class="ptag">Webhooks</span>
+                        <span class="ptag">Log Analysis</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="#" onclick="openModal('modal-bot'); return false;" class="link-details">VER LOGS EN VIVO <i class="fas fa-robot"></i></a>
+                </div>
+            </div>
+
+             <!-- PROYECTO: CENFOTEC -->
+             <div class="project-card">
+                <div class="card-header">
+                    <span style="font-weight: bold; color: #fff;">DESARROLLO WEB</span>
+                    <span class="status status-live">Online</span>
+                </div>
+                <div class="card-body">
+                    <h3>Sitio Web CENFOTEC</h3>
+                    <p>Portal web institucional educativo. Desarrollo enfocado en la experiencia de usuario, estructura de información y diseño responsivo.</p>
+                    <div class="project-tags">
+                        <span class="ptag">HTML5 / CSS3</span>
+                        <span class="ptag">JavaScript</span>
+                        <span class="ptag">Diseño UI/UX</span>
+                        <span class="ptag">Responsive</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="https://www.cenfotec.com.co/" target="_blank" class="link-details">VISITAR SITIO WEB <i class="fas fa-external-link-alt"></i></a>
                 </div>
             </div>
 
@@ -925,15 +999,6 @@
                         <li><strong>Frontend:</strong> Arquitectura reactiva utilizando <strong>Blade Templates</strong> potenciado con <strong>Livewire</strong>. Esto permite interacciones dinámicas (SPA feel) sin la complejidad de frameworks JS externos, facilitando el mantenimiento.</li>
                     </ul>
                 </div>
-
-                <div class="content-block">
-                    <h4>3. LÓGICA DE NEGOCIO</h4>
-                    <ul>
-                        <li><strong>Flujo Jerárquico:</strong> Sistema de aprobación multinivel (Empleado -> Director -> RRHH). Cada nivel posee permisos específicos de escritura y validación.</li>
-                        <li><strong>Seguridad:</strong> Autenticación robusta, protección CSRF/XSS y sistema de <strong>Firma Digital</strong> criptográfica para validar cada aprobación.</li>
-                        <li><strong>Notificaciones:</strong> Motor de eventos que dispara correos electrónicos transaccionales en cada cambio de estado de la solicitud.</li>
-                    </ul>
-                </div>
             </div>
 
             <!-- TAB 2: DEMO VISUAL -->
@@ -951,46 +1016,27 @@
                             <div class="mock-nav-item active" onclick="showIshajonView('dashboard', this)"><i class="fas fa-th-large"></i> Dashboard</div>
                             <div class="mock-nav-item" onclick="showIshajonView('new', this)"><i class="fas fa-plus-circle"></i> Nueva Solicitud</div>
                             <div class="mock-nav-item" onclick="showIshajonView('history', this)"><i class="fas fa-history"></i> Historial</div>
-                            <div style="margin-top:auto; padding: 20px; color:#666; font-size:0.8rem;">Ver. 2.4.0</div>
                         </div>
                         
                         <!-- Main Content -->
                         <div class="mock-main">
                             <div class="mock-topbar">
                                 <h3 style="color:#fff; font-size:1.2rem;">Portal de Empleado</h3>
-                                <div class="mock-user-profile">
-                                    <span>Dev Team</span>
-                                    <div class="mock-avatar">C</div>
-                                </div>
+                                <div class="mock-user-profile"><span>Dev Team</span><div class="mock-avatar">C</div></div>
                             </div>
 
                             <!-- VIEW 1: DASHBOARD -->
                             <div id="ishajon-view-dashboard" class="ishajon-view active-view">
                                 <div class="mock-stat-grid">
-                                    <div class="mock-stat-card">
-                                        <div class="stat-val" id="stat-pending">02</div>
-                                        <div class="stat-label">Pendientes</div>
-                                    </div>
-                                    <div class="mock-stat-card">
-                                        <div class="stat-val" style="color:#4ec9b0">15</div>
-                                        <div class="stat-label">Aprobados</div>
-                                    </div>
-                                    <div class="mock-stat-card alert">
-                                        <div class="stat-val" style="color:var(--secondary)">01</div>
-                                        <div class="stat-label">Rechazados</div>
-                                    </div>
+                                    <div class="mock-stat-card"><div class="stat-val" id="stat-pending">02</div><div class="stat-label">Pendientes</div></div>
+                                    <div class="mock-stat-card"><div class="stat-val" style="color:#4ec9b0">15</div><div class="stat-label">Aprobados</div></div>
+                                    <div class="mock-stat-card alert"><div class="stat-val" style="color:var(--secondary)">01</div><div class="stat-label">Rechazados</div></div>
                                 </div>
-
                                 <div style="background:#1e1e1e; border:1px solid #333; border-radius:8px; padding:20px;">
-                                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
-                                        <span style="color:#fff; font-weight:bold;">Solicitudes Recientes</span>
-                                    </div>
+                                    <div style="margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px; color:#fff; font-weight:bold;">Solicitudes Recientes</div>
                                     <div id="ishajon-recent-list">
                                         <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #222;">
-                                            <div>
-                                                <div style="color:#eee;">Cita Médica General</div>
-                                                <div style="color:#666; font-size:0.8rem;">Creado: Hoy, 08:30 AM</div>
-                                            </div>
+                                            <div><div style="color:#eee;">Cita Médica General</div><div style="color:#666; font-size:0.8rem;">Creado: Hoy, 08:30 AM</div></div>
                                             <span style="background:rgba(255, 189, 46, 0.1); color:#ffbd2e; padding:3px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ffbd2e;">En Revisión</span>
                                         </div>
                                     </div>
@@ -1000,39 +1046,16 @@
                             <!-- VIEW 2: NEW REQUEST -->
                             <div id="ishajon-view-new" class="ishajon-view">
                                 <h4 style="margin-bottom:20px; color:#fff;">Crear Nuevo Permiso</h4>
-                                <div class="mock-form-group">
-                                    <label class="mock-label">Tipo de Permiso</label>
-                                    <select id="input-permiso-type" class="mock-select">
-                                        <option>Cita Médica</option>
-                                        <option>Calamidad Doméstica</option>
-                                        <option>Diligencia Personal</option>
-                                    </select>
-                                </div>
-                                <div class="mock-form-group">
-                                    <label class="mock-label">Fecha</label>
-                                    <input type="date" class="mock-input">
-                                </div>
-                                <div class="mock-form-group">
-                                    <label class="mock-label">Justificación</label>
-                                    <input type="text" id="input-permiso-desc" class="mock-input" placeholder="Describa brevemente...">
-                                </div>
+                                <div class="mock-form-group"><label class="mock-label">Tipo</label><select id="input-permiso-type" class="mock-select"><option>Cita Médica</option><option>Calamidad</option></select></div>
+                                <div class="mock-form-group"><label class="mock-label">Justificación</label><input type="text" id="input-permiso-desc" class="mock-input"></div>
                                 <button class="mock-btn-submit" onclick="submitIshajonForm()">Enviar Solicitud</button>
                             </div>
 
                             <!-- VIEW 3: HISTORY -->
                             <div id="ishajon-view-history" class="ishajon-view">
                                 <h4 style="margin-bottom:20px; color:#fff;">Historial Completo</h4>
-                                <p style="color:#666;">Mostrando registros de 2025-2026</p>
-                                <div style="margin-top:20px; padding:15px; background:#252526; border-radius:4px;">
-                                    <div style="color:#fff;">Permiso de Estudio</div>
-                                    <div style="color:#888; font-size:0.8rem;">Aprobado por: Dirección RRHH</div>
-                                </div>
-                                <div style="margin-top:10px; padding:15px; background:#252526; border-radius:4px;">
-                                    <div style="color:#fff;">Cita Odontológica</div>
-                                    <div style="color:#888; font-size:0.8rem;">Aprobado por: Supervisor</div>
-                                </div>
+                                <p style="color:#666;">Registros 2025</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -1045,137 +1068,170 @@
     <div id="modal-reqs" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-reqs')">&times;</span>
-            
             <div class="modal-header-section">
                 <h2>ARQUITECTURA & SRS</h2>
                 <div class="modal-subtitle">Especificación de Requerimientos de Software</div>
             </div>
-
             <div class="modal-tabs">
                 <button class="tab-btn active" onclick="switchTab('reqs', 'details')">ANÁLISIS FUNCIONAL</button>
                 <button class="tab-btn" onclick="switchTab('reqs', 'demo')">ESTRUCTURA VISUAL</button>
             </div>
-
-            <!-- TAB 1 -->
             <div id="reqs-details" class="tab-content active">
                 <div class="content-block">
-                    <p>Documentación técnica que cierra la brecha entre las necesidades del negocio y la implementación del código. Este enfoque garantiza escalabilidad y mantenibilidad.</p>
+                    <p>Documentación técnica detallada incluyendo SRS, diagramas de arquitectura y flujos de datos.</p>
                 </div>
-
                 <div class="content-block">
                     <h4>REQ-01: GESTIÓN DE ACCESO (RBAC)</h4>
-                    <p><strong>Objetivo:</strong> Implementar un sistema de control de acceso basado en roles para asegurar la integridad de los datos.</p>
-                    <ul>
-                        <li>Implementación de Middleware de autorización en rutas críticas.</li>
-                        <li>Encriptación de contraseñas utilizando Bcrypt.</li>
-                        <li>Sesiones seguras con tiempo de expiración configurable.</li>
-                    </ul>
-                </div>
-
-                <div class="content-block">
-                    <h4>REQ-02: TRAZABILIDAD Y AUDITORÍA</h4>
-                    <p><strong>Objetivo:</strong> Cada acción crítica (aprobación/rechazo) debe ser inmutable y rastreable.</p>
-                    <ul>
-                        <li>Registro de logs detallados (Usuario, IP, Timestamp, Acción).</li>
-                        <li>Firmado digital de registros para evitar repudio.</li>
-                    </ul>
+                    <ul><li>Middleware de autorización.</li><li>Encriptación Bcrypt.</li></ul>
                 </div>
             </div>
-
-            <!-- TAB 2 -->
             <div id="reqs-demo" class="tab-content">
-                <p class="highlight" style="margin-bottom: 20px;">DEMO: EXPLORADOR DE CÓDIGO (CLICK EN ARCHIVOS)</p>
-                
+                <p class="highlight" style="margin-bottom: 20px;">DEMO: EXPLORADOR DE CÓDIGO</p>
                 <div class="mock-editor">
-                    <div class="editor-header">
-                        <div class="editor-tab" id="arch-tab-name">RBAC_Middleware.php</div>
-                        <div style="margin-left:auto; font-size:0.8rem;">PHP 8.1</div>
-                    </div>
-                    <div style="display:flex;">
-                        <!-- Sidebar Archivos -->
-                        <div style="width:250px; background:#181818; border-right:1px solid #333; padding:10px;">
-                            <div class="tree-line" onclick="loadArchCode('rbac')"><span class="tree-indent"></span><span class="tree-file">RBAC_Middleware.php</span></div>
-                            <div class="tree-line" onclick="loadArchCode('dto')"><span class="tree-indent"></span><span class="tree-file">CreateRequestDTO.php</span></div>
-                            <div class="tree-line" onclick="loadArchCode('service')"><span class="tree-indent"></span><span class="tree-file">ApprovalService.php</span></div>
-                        </div>
-                        <!-- Code Area -->
-                        <div class="editor-body" id="arch-code-display" style="flex:1;">
-                            <span style="color:#569cd6">namespace</span> <span style="color:#4ec9b0">App\Http\Middleware</span>;<br><br>
-                            <span style="color:#c586c0">class</span> <span style="color:#4ec9b0">RBAC_Middleware</span> {<br>
-                            &nbsp;&nbsp;<span style="color:#c586c0">public function</span> <span style="color:#dcdcaa">handle</span>($request, $next, $role) {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">if</span> (! $request->user()->hasRole($role)) {<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">return</span> response()->json([<span style="color:#ce9178">'error'</span> => <span style="color:#ce9178">'Unauthorized'</span>], 403);<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-                            &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">return</span> $next($request);<br>
-                            &nbsp;&nbsp;}<br>
-                            }
-                        </div>
+                    <div class="editor-header"><div class="editor-tab">RBAC_Middleware.php</div></div>
+                    <div class="editor-body" style="min-height:200px; color:#aaa;">
+                        &lt;?php namespace App\Http\Middleware; ...
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- MODAL 3: SAP POS -->
     <div id="modal-sap" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal('modal-sap')">&times;</span>
-            
             <div class="modal-header-section">
                 <h2>HERRAMIENTAS SAP POS</h2>
-                <div class="modal-subtitle">Automatización y Soporte Operativo Nivel 2</div>
+                <div class="modal-subtitle">Automatización y Soporte Operativo</div>
+            </div>
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchTab('sap', 'details')">ALCANCE</button>
+                <button class="tab-btn" onclick="switchTab('sap', 'demo')">TERMINAL</button>
+            </div>
+            <div id="sap-details" class="tab-content active">
+                <div class="content-block"><h4>Soporte Nivel 2</h4><p>Diagnóstico de fallos en ERP y replicación de datos.</p></div>
+            </div>
+            <div id="sap-demo" class="tab-content">
+                <p class="highlight" style="margin-bottom: 20px;">TERMINAL INTERACTIVA</p>
+                <div class="mock-terminal-window">
+                    <div class="term-body" id="term-output-area">
+                        <div class="term-content">Bienvenido. Escriba 'help'.</div>
+                        <div class="term-input-line"><span class="term-prompt">admin@server:~$</span> <input type="text" id="term-input"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: API REST (NUEVO) -->
+    <div id="modal-api" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-api')">&times;</span>
+            
+            <div class="modal-header-section">
+                <h2>API MICROSERVICIOS</h2>
+                <div class="modal-subtitle">Backend High-Performance con FastAPI</div>
             </div>
 
             <div class="modal-tabs">
-                <button class="tab-btn active" onclick="switchTab('sap', 'details')">ALCANCE DEL ROL</button>
-                <button class="tab-btn" onclick="switchTab('sap', 'demo')">TERMINAL INTERACTIVA</button>
+                <button class="tab-btn active" onclick="switchTab('api', 'details')">ARQUITECTURA</button>
+                <button class="tab-btn" onclick="switchTab('api', 'demo')">PRUEBA INTERACTIVA</button>
             </div>
 
-            <!-- TAB 1 -->
-            <div id="sap-details" class="tab-content active">
+            <div id="api-details" class="tab-content active">
                 <div class="content-block">
-                    <h4>1. SOPORTE TÉCNICO ESPECIALIZADO</h4>
-                    <p>Gestión de incidentes complejos en el punto de venta (POS). Diagnóstico de fallos en la comunicación con el ERP central, resolución de errores de replicación de datos (IDOCs) y soporte a hardware periférico.</p>
+                    <h4>1. DISEÑO DE SISTEMA</h4>
+                    <p>API RESTful diseñada para manejar picos de tráfico. Utiliza <strong>FastAPI</strong> por su naturaleza asíncrona, permitiendo miles de peticiones por segundo con mínimo consumo de recursos.</p>
                 </div>
-                
                 <div class="content-block">
-                    <h4>2. AUTOMATIZACIÓN (SCRIPTING)</h4>
-                    <p>Desarrollo de scripts en <strong>Python</strong> y consultas <strong>SQL</strong> avanzadas para automatizar tareas repetitivas:</p>
+                    <h4>2. STACK TÉCNICO</h4>
                     <ul>
-                        <li>Limpieza de logs antiguos para optimizar rendimiento.</li>
-                        <li>Extracción masiva de reportes de ventas locales en casos de caída de red.</li>
-                        <li>Verificación de integridad de base de datos local.</li>
+                        <li><strong>FastAPI (Python):</strong> Framework principal.</li>
+                        <li><strong>Docker:</strong> Contenerización para despliegue consistente.</li>
+                        <li><strong>Redis:</strong> Caché de respuestas frecuentes y cola de tareas.</li>
+                        <li><strong>JWT:</strong> Autenticación stateless segura.</li>
                     </ul>
                 </div>
-
-                <div class="content-block">
-                    <h4>3. CAPACITACIÓN</h4>
-                    <p>Liderazgo en procesos de formación a usuarios finales (cajeros y supervisores) para asegurar el uso correcto de las nuevas funcionalidades del sistema.</p>
-                </div>
             </div>
 
-            <!-- TAB 2 -->
-            <div id="sap-demo" class="tab-content">
-                <p class="highlight" style="margin-bottom: 20px;">DEMO: TERMINAL INTERACTIVA (ESCRIBE: help, status, clear)</p>
+            <div id="api-demo" class="tab-content">
+                <p class="highlight" style="margin-bottom: 20px;">CLIENTE API SIMULADO (POSTMAN STYLE)</p>
                 
-                <div class="mock-terminal-window">
-                    <div class="term-header">admin@pos-server: ~ (ssh)</div>
-                    <div class="term-body" id="term-output-area">
-                        <div class="term-content">
-                            <span class="term-success">Bienvenido a POS Maintenance Console v3.1</span><br>
-                            Escriba 'help' para ver comandos disponibles.<br><br>
+                <div class="mock-api-client">
+                    <div class="api-header">
+                        <span class="api-method">POST</span>
+                        <input type="text" class="api-url" value="https://api.inventory-core.com/v1/products/sync" readonly>
+                        <button class="api-send-btn" onclick="sendApiRequest()">ENVIAR</button>
+                    </div>
+                    <div class="api-body-area">
+                        <div class="api-pane">
+                            <div class="api-pane-title">Request Body (JSON)</div>
+                            <div class="json-code">{
+  <span class="json-key">"store_id"</span>: <span class="json-num">1045</span>,
+  <span class="json-key">"sync_mode"</span>: <span class="json-val">"full"</span>,
+  <span class="json-key">"items"</span>: [
+    { <span class="json-key">"sku"</span>: <span class="json-val">"A-992"</span>, <span class="json-key">"qty"</span>: <span class="json-num">50</span> }
+  ]
+}</div>
                         </div>
-                        <!-- Input Line -->
-                        <div class="term-input-line">
-                            <span class="term-prompt">admin@pos-server:</span><span class="term-path">~$</span>&nbsp;
-                            <input type="text" id="term-input" autocomplete="off" spellcheck="false">
+                        <div class="api-pane" style="border-right:none; background:#181818;">
+                            <div class="api-pane-title">Response</div>
+                            <div id="api-response-area" class="json-code" style="color:#666;">Esperando petición...</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- MODAL 5: BOT DE AUDITORÍA (NUEVO) -->
+    <div id="modal-bot" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('modal-bot')">&times;</span>
+            
+            <div class="modal-header-section">
+                <h2>BOT DE AUDITORÍA</h2>
+                <div class="modal-subtitle">Automatización de Procesos de Infraestructura</div>
+            </div>
+
+            <div class="modal-tabs">
+                <button class="tab-btn active" onclick="switchTab('bot', 'details')">LÓGICA DEL SCRIPT</button>
+                <button class="tab-btn" onclick="switchTab('bot', 'demo')">EJECUCIÓN EN VIVO</button>
+            </div>
+
+            <div id="bot-details" class="tab-content active">
+                <div class="content-block">
+                    <h4>1. PROPÓSITO</h4>
+                    <p>Eliminar la carga manual de revisar logs de servidores diariamente. Este bot se ejecuta cada madrugada, analiza archivos de registro en busca de patrones de error (Regex) y genera alertas.</p>
+                </div>
+                <div class="content-block">
+                    <h4>2. FLUJO DE TRABAJO</h4>
+                    <ul>
+                        <li><strong>Conexión SSH:</strong> Itera sobre una lista de inventario de servidores.</li>
+                        <li><strong>Análisis:</strong> Parsea `/var/log/syslog` buscando palabras clave ("Error", "Fail", "Panic").</li>
+                        <li><strong>Reporte:</strong> Compila un resumen CSV y lo envía por correo electrónico a la gerencia TI.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="bot-demo" class="tab-content">
+                <p class="highlight" style="margin-bottom: 20px;">SIMULACIÓN DE EJECUCIÓN (LOG VIEWER)</p>
+                
+                <div class="mock-terminal-window" style="background:#001514; border-color:#00f2ea;">
+                    <div class="term-header" style="background:#002b29; color:#00f2ea;">SYSTEM AUDIT BOT v2.0 - RUNNING</div>
+                    <div class="term-body" id="bot-log-area" style="font-size:0.85rem; height:350px; overflow-y:auto; color:#aafffa;">
+                        <div><span style="color:#666">[03:00:00]</span> Iniciando secuencia de auditoría...</div>
+                        <div><span style="color:#666">[03:00:01]</span> Cargando configuración de servers.json... OK</div>
+                        <div style="margin-top:10px;"><span style="color:#ffff00">>> Conectando a Server-Alpha (192.168.1.10)...</span></div>
+                    </div>
+                    <button class="btn" style="margin:20px; width:auto;" onclick="startBotSimulation()">INICIAR ANÁLISIS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // --- LOGICA DE TABS ---
@@ -1192,12 +1248,8 @@
 
         // --- INTERACTIVIDAD ISHAJON (MOCK DASHBOARD) ---
         function showIshajonView(viewName, btnElement) {
-            // Ocultar vistas
             document.querySelectorAll('.ishajon-view').forEach(el => el.classList.remove('active-view'));
-            // Mostrar seleccionada
             document.getElementById(`ishajon-view-${viewName}`).classList.add('active-view');
-            
-            // Actualizar active sidebar
             document.querySelectorAll('.mock-nav-item').forEach(el => el.classList.remove('active'));
             if(btnElement) btnElement.classList.add('active');
         }
@@ -1206,185 +1258,139 @@
             const type = document.getElementById('input-permiso-type').value;
             const desc = document.getElementById('input-permiso-desc').value || "Sin detalles";
             const today = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            // Agregar a la lista
             const list = document.getElementById('ishajon-recent-list');
             const newItem = `
                 <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #222; animation: fadeIn 0.5s;">
-                    <div>
-                        <div style="color:#eee;">${type}</div>
-                        <div style="color:#666; font-size:0.8rem;">${desc} - ${today}</div>
-                    </div>
+                    <div><div style="color:#eee;">${type}</div><div style="color:#666; font-size:0.8rem;">${desc} - ${today}</div></div>
                     <span style="background:rgba(255, 189, 46, 0.1); color:#ffbd2e; padding:3px 8px; border-radius:4px; font-size:0.8rem; border:1px solid #ffbd2e;">En Revisión</span>
-                </div>
-            `;
+                </div>`;
             list.insertAdjacentHTML('afterbegin', newItem);
-
-            // Actualizar contador
             const countEl = document.getElementById('stat-pending');
             let count = parseInt(countEl.innerText);
             countEl.innerText = (count + 1).toString().padStart(2, '0');
-
-            // Volver a dashboard
             alert("Solicitud Enviada Exitosamente");
-            showIshajonView('dashboard', document.querySelector('.mock-nav-item')); // Hack para volver al primero
+            showIshajonView('dashboard', document.querySelector('.mock-nav-item')); 
         }
 
-        // --- INTERACTIVIDAD ARQUITECTURA (CODE EXPLORER) ---
-        const codeSnippets = {
-            rbac: `<span style="color:#569cd6">namespace</span> <span style="color:#4ec9b0">App\\Http\\Middleware</span>;<br><br><span style="color:#c586c0">class</span> <span style="color:#4ec9b0">RBAC_Middleware</span> {<br>&nbsp;&nbsp;<span style="color:#c586c0">public function</span> <span style="color:#dcdcaa">handle</span>($request, $next, $role) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">if</span> (! $request->user()->hasRole($role)) {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">return</span> response()->json([<span style="color:#ce9178">'error'</span> => <span style="color:#ce9178">'Unauthorized'</span>], 403);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">return</span> $next($request);<br>&nbsp;&nbsp;}<br>}`,
-            dto: `<span style="color:#569cd6">namespace</span> <span style="color:#4ec9b0">App\\DTO</span>;<br><br><span style="color:#c586c0">class</span> <span style="color:#4ec9b0">CreateRequestDTO</span> {<br>&nbsp;&nbsp;<span style="color:#c586c0">public readonly string</span> $userId;<br>&nbsp;&nbsp;<span style="color:#c586c0">public readonly string</span> $type;<br>&nbsp;&nbsp;<span style="color:#c586c0">public readonly string</span> $reason;<br><br>&nbsp;&nbsp;<span style="color:#c586c0">public function</span> <span style="color:#dcdcaa">__construct</span>($data) {<br>&nbsp;&nbsp;&nbsp;&nbsp;$this->userId = $data[<span style="color:#ce9178">'user_id'</span>];<br>&nbsp;&nbsp;&nbsp;&nbsp;$this->type = $data[<span style="color:#ce9178">'type'</span>];<br>&nbsp;&nbsp;}<br>}`,
-            service: `<span style="color:#569cd6">namespace</span> <span style="color:#4ec9b0">App\\Services</span>;<br><br><span style="color:#c586c0">class</span> <span style="color:#4ec9b0">ApprovalService</span> {<br>&nbsp;&nbsp;<span style="color:#c586c0">public function</span> <span style="color:#dcdcaa">signDocument</span>($docId, $user) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6a9955">// Generar Hash SHA-256</span><br>&nbsp;&nbsp;&nbsp;&nbsp;$signature = hash(<span style="color:#ce9178">'sha256'</span>, $docId . $user->secret);<br>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#c586c0">return</span> $signature;<br>&nbsp;&nbsp;}<br>}`
-        };
-        const fileNames = { rbac: "RBAC_Middleware.php", dto: "CreateRequestDTO.php", service: "ApprovalService.php" };
-
-        function loadArchCode(key) {
-            document.getElementById('arch-code-display').innerHTML = codeSnippets[key];
-            document.getElementById('arch-tab-name').innerText = fileNames[key];
-        }
-
-
-        // --- INTERACTIVIDAD TERMINAL ---
+        // --- INTERACTIVIDAD TERMINAL (SAP) ---
         const termInput = document.getElementById('term-input');
         const termOutput = document.querySelector('.term-content');
-
-        termInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.trim().toLowerCase();
-                this.value = ''; // Limpiar input
-                
-                // Escribir linea de comando en historial
-                termOutput.innerHTML += `<div><span class="term-prompt">admin@pos-server:</span><span class="term-path">~$</span> ${cmd}</div>`;
-                
-                // Procesar comando
-                let response = "";
-                if (cmd === 'help') {
-                    response = "Comandos disponibles: <br> - status: Ver estado de servicios<br> - diag_pos: Correr diagnostico<br> - clear: Limpiar pantalla<br> - date: Ver fecha servidor";
-                } else if (cmd === 'status') {
-                    response = "<span class='term-success'>[OK]</span> Database Service<br><span class='term-success'>[OK]</span> Sync Service<br><span style='color:red'>[ERR]</span> Printer Spooler";
-                } else if (cmd === 'diag_pos') {
-                    response = "Iniciando diagnóstico...<br>Verificando integridad de tablas... OK<br>Revisando logs de errores... 0 errores encontrados.<br>Sistema estable.";
-                } else if (cmd === 'clear') {
-                    termOutput.innerHTML = "";
-                    return;
-                } else if (cmd === 'date') {
-                    response = new Date().toString();
-                } else if (cmd === '') {
-                    response = "";
-                } else {
-                    response = `Comando no reconocido: ${cmd}`;
-                }
-
-                if(response) {
+        if(termInput) {
+            termInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const cmd = this.value.trim().toLowerCase();
+                    this.value = ''; 
+                    termOutput.innerHTML += `<div><span class="term-prompt">admin@pos-server:</span><span class="term-path">~$</span> ${cmd}</div>`;
+                    let response = "";
+                    if (cmd === 'help') response = "Comandos: status, diag_pos, clear";
+                    else if (cmd === 'status') response = "<span style='color:#00ff00'>[OK]</span> Services Running";
+                    else if (cmd === 'clear') { termOutput.innerHTML = ""; return; }
+                    else response = "Comando desconocido";
                     termOutput.innerHTML += `<div style="margin-bottom:10px; color:#ccc;">${response}</div>`;
+                    document.getElementById('term-output-area').scrollTop = document.getElementById('term-output-area').scrollHeight;
                 }
+            });
+        }
 
-                // Scroll al fondo
-                const termBody = document.getElementById('term-output-area');
-                termBody.scrollTop = termBody.scrollHeight;
+        // --- INTERACTIVIDAD API DEMO ---
+        function sendApiRequest() {
+            const output = document.getElementById('api-response-area');
+            output.innerHTML = `<span style="color:#fce94f">Enviando petición...</span>`;
+            
+            setTimeout(() => {
+                output.innerHTML = `{
+  <span class="json-key">"status"</span>: <span class="json-val">"success"</span>,
+  <span class="json-key">"timestamp"</span>: <span class="json-val">"${new Date().toISOString()}"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"processed_items"</span>: <span class="json-num">1</span>,
+    <span class="json-key">"job_id"</span>: <span class="json-val">"jb_99821_x"</span>
+  }
+}`;
+            }, 800);
+        }
+
+        // --- INTERACTIVIDAD BOT DEMO ---
+        function startBotSimulation() {
+            const logArea = document.getElementById('bot-log-area');
+            logArea.innerHTML = '<div><span style="color:#666">[03:00:00]</span> Iniciando secuencia...</div>';
+            
+            const logs = [
+                "Verificando espacio en disco... OK (45% libre)",
+                "Analizando /var/log/syslog...",
+                "<span style='color:#ff5f56'>[ALERTA] Patrón 'Connection Refused' encontrado en línea 402</span>",
+                "Intentando reinicio automático de servicio 'networking'...",
+                "Servicio reiniciado. Verificando conectividad...",
+                "<span style='color:#00f2ea'>[EXITO] Conectividad restablecida.</span>",
+                "Generando reporte PDF...",
+                "Enviando correo a sysadmin@empresa.com...",
+                "Tarea finalizada correctamente."
+            ];
+
+            let i = 0;
+            function printLog() {
+                if(i < logs.length) {
+                    const time = new Date().toLocaleTimeString();
+                    logArea.innerHTML += `<div><span style="color:#666">[${time}]</span> ${logs[i]}</div>`;
+                    logArea.scrollTop = logArea.scrollHeight;
+                    i++;
+                    setTimeout(printLog, 800);
+                }
             }
-        });
+            printLog();
+        }
 
 
         // --- LÓGICA DEL CANVAS NEURONAL ---
         const canvas = document.getElementById('neuro-canvas');
         const ctx = canvas.getContext('2d');
-        
         let width, height;
         let particles = [];
-        
-        // Configuración
-        const config = {
-            particleCount: 80,
-            connectionDistance: 150, 
-            mouseDistance: 200, 
-            baseColor: 'rgba(0, 242, 234, 0.5)', 
-            secColor: 'rgba(255, 0, 85, 0.5)' 
-        };
-
+        const config = { particleCount: 80, connectionDistance: 150, mouseDistance: 200, baseColor: 'rgba(0, 242, 234, 0.5)', secColor: 'rgba(255, 0, 85, 0.5)' };
         const mouse = { x: null, y: null };
 
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            if(width < 768) config.particleCount = 40;
-            else config.particleCount = 80;
+            config.particleCount = width < 768 ? 40 : 80;
             initParticles();
         }
 
         class Particle {
             constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 1.5; 
-                this.vy = (Math.random() - 0.5) * 1.5; 
-                this.size = Math.random() * 2 + 1;
-                this.color = Math.random() > 0.5 ? config.baseColor : config.secColor;
+                this.x = Math.random() * width; this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1.5; this.vy = (Math.random() - 0.5) * 1.5;
+                this.size = Math.random() * 2 + 1; this.color = Math.random() > 0.5 ? config.baseColor : config.secColor;
             }
-
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                this.x += this.vx; this.y += this.vy;
                 if (this.x < 0 || this.x > width) this.vx *= -1;
                 if (this.y < 0 || this.y > height) this.vy *= -1;
-
                 if (mouse.x != null) {
-                    let dx = mouse.x - this.x;
-                    let dy = mouse.y - this.y;
+                    let dx = mouse.x - this.x; let dy = mouse.y - this.y;
                     let distance = Math.sqrt(dx*dx + dy*dy);
                     if (distance < config.mouseDistance) {
-                        const forceDirectionX = dx / distance;
-                        const forceDirectionY = dy / distance;
                         const force = (config.mouseDistance - distance) / config.mouseDistance;
-                        this.vx += forceDirectionX * force * 0.05;
-                        this.vy += forceDirectionY * force * 0.05;
+                        this.vx += (dx / distance) * force * 0.05; this.vy += (dy / distance) * force * 0.05;
                     }
                 }
             }
-
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
-            }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill(); }
         }
 
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < config.particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
+        function initParticles() { particles = []; for (let i = 0; i < config.particleCount; i++) particles.push(new Particle()); }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
             for (let i = 0; i < particles.length; i++) {
-                let p1 = particles[i];
-                p1.update();
-                p1.draw();
+                let p1 = particles[i]; p1.update(); p1.draw();
                 for (let j = i; j < particles.length; j++) {
                     let p2 = particles[j];
                     let distance = Math.sqrt((p1.x - p2.x)**2 + (p1.y - p2.y)**2);
                     if (distance < config.connectionDistance) {
                         ctx.beginPath();
                         let opacity = 1 - (distance / config.connectionDistance);
-                        ctx.strokeStyle = `rgba(0, 242, 234, ${opacity * 0.4})`; 
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                }
-                if (mouse.x != null) {
-                    let distMouse = Math.sqrt((p1.x - mouse.x)**2 + (p1.y - mouse.y)**2);
-                    if (distMouse < config.mouseDistance) {
-                        ctx.beginPath();
-                        let opacity = 1 - (distMouse / config.mouseDistance);
-                        ctx.strokeStyle = `rgba(255, 0, 85, ${opacity * 0.6})`; 
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
+                        ctx.strokeStyle = `rgba(0, 242, 234, ${opacity * 0.4})`;
+                        ctx.lineWidth = 1; ctx.moveTo(p1.x, p1.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
                     }
                 }
             }
@@ -1394,34 +1400,19 @@
         window.addEventListener('resize', resize);
         window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
         window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
-        resize();
-        animate();
+        resize(); animate();
 
-        // --- FUNCIONES MODALES ---
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             modal.style.display = "block";
             document.body.style.overflow = "hidden";
-            
-            // Foco automatico en terminal si se abre
-            if(modalId === 'modal-sap') {
-                setTimeout(() => document.getElementById('term-input').focus(), 100);
-            }
+            if(modalId === 'modal-sap') setTimeout(() => document.getElementById('term-input').focus(), 100);
         }
-
         function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = "none";
+            document.getElementById(modalId).style.display = "none";
             document.body.style.overflow = "auto";
         }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = "none";
-                document.body.style.overflow = "auto";
-            }
-        }
+        window.onclick = function(event) { if (event.target.classList.contains('modal')) { event.target.style.display = "none"; document.body.style.overflow = "auto"; } }
     </script>
 </body>
 </html>
-
